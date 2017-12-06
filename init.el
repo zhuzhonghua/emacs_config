@@ -4,7 +4,7 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
-
+(setq-default tab-width 4)
 (setq make-backup-files nil)
 
 (show-paren-mode)
@@ -79,3 +79,4 @@
   (aset buffer-display-table ?\^M []))
 
 (add-hook 'text-mode-hook 'hide-ctrl-M)
+(add-hook 'c++-mode-hook 'hide-ctrl-M)
