@@ -80,3 +80,10 @@
 
 (add-hook 'text-mode-hook 'hide-ctrl-M)
 (add-hook 'c++-mode-hook 'hide-ctrl-M)
+
+(defun my-c++-style-set ()
+  (interactive)
+  (setq c-basic-offset 4)
+  (c-set-offset 'substatement-open 0))
+(add-hook 'c++-mode-hook 'my-c++-style-set)
+(add-hook 'c-mode-hook 'my-c++-style-set)
