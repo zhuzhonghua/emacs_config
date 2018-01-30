@@ -55,7 +55,7 @@
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
-(global-set-key "\C-s" 'swiper)
+;;(global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "<f6>") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -70,7 +70,7 @@
 (global-set-key (kbd "C-c k") 'counsel-ag)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-(define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+;;(define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
 
 (defun hide-ctrl-M ()
   "Hides the disturbing '^M' showing up in files containing mixed UNIX and DOS line endings."
@@ -87,3 +87,8 @@
   (c-set-offset 'substatement-open 0))
 (add-hook 'c++-mode-hook 'my-c++-style-set)
 (add-hook 'c-mode-hook 'my-c++-style-set)
+
+(projectile-global-mode)
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
