@@ -92,3 +92,8 @@
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
+
+(add-hook 'python-mode-hook
+		  (lambda ()
+			(setq indent-tabs-mode t)
+			(setq tab-width 2)))
