@@ -97,3 +97,32 @@
 		  (lambda ()
 			(setq indent-tabs-mode t)
 			(setq tab-width 2)))
+
+;;(defun copy-line ()
+;;  (interactive)
+;;  (save-excursion
+;;	(move-beginning-of-line nil)
+;;	(set-mark-command nil)
+;;	(move-end-of-line nil)
+;;	(kill-ring-save)))
+
+(defun copy-line ()
+  (interactive)
+  (save-excursion
+	(kill-ring-save (line-beginning-position) (line-end-position))))
+
+;;(defun cut-line ()
+;;  (interactive)
+;;  (save-excursion
+;;	(move-beginning-of-line nil)
+;;	(set-mark-command nil)
+;;	(move-end-of-line nil)
+;;	(kill-region)))
+
+(defun cut-line ()
+  (interactive)
+  (save-excursion
+	(kill-region (line-beginning-position) (line-end-position))))
+
+(global-set-key (kbd "C-c M-w") 'copy-line)
+(global-set-key (kbd "C-c C-w") 'cut-line)
