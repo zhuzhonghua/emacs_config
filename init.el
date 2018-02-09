@@ -124,5 +124,11 @@
   (save-excursion
 	(kill-region (line-beginning-position) (line-end-position))))
 
+(defun kill-buffer-delete-window ()
+  (interactive)
+  (kill-buffer)
+  (delete-window))
+
 (global-set-key (kbd "C-c M-w") 'copy-line)
 (global-set-key (kbd "C-c C-w") 'cut-line)
+(global-set-key (kbd "C-c 0") 'kill-buffer-delete-window)
