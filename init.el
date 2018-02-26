@@ -96,7 +96,8 @@
 (add-hook 'python-mode-hook
 		  (lambda ()
 			(setq indent-tabs-mode t)
-			(setq tab-width 2)))
+			(setq tab-width 2)
+			(setq python-indent-offset 2)))
 
 ;;(defun copy-line ()
 ;;  (interactive)
@@ -129,6 +130,13 @@
   (kill-buffer)
   (delete-window))
 
+(defun yank-copy-cut ()
+  (interactive)
+  (save-excursion
+	(move-beginning-of-line nil)
+	(yank)))
+
 (global-set-key (kbd "C-c M-w") 'copy-line)
 (global-set-key (kbd "C-c C-w") 'cut-line)
+(global-set-key (kbd "C-c C-y") 'yank-copy-cut)
 (global-set-key (kbd "C-c 0") 'kill-buffer-delete-window)
