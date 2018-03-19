@@ -42,13 +42,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (ag exec-path-from-shell typescript-mode magit))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+ '(package-selected-packages (quote (ag exec-path-from-shell typescript-mode magit)))
+ '(show-paren-mode t))
+
+;;(set-face-attribute 'default nil :family "Consolas" :height 160)
+(set-face-attribute 'default nil :font "Consolas 18")
+;; Chinese Font
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+		    charset (font-spec :family "Consolas"
+				       :size 18)))
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
@@ -81,9 +84,17 @@
 (add-hook 'text-mode-hook 'hide-ctrl-M)
 (add-hook 'c++-mode-hook 'hide-ctrl-M)
 
+(defun my-typescript-mode ()
+	(interactive)
+	(setq typescript-indent-level 2)
+	(setq js-indent-level 2))
+
+(add-hook 'typescript-mode-hook 'my-typescript-mode)
+(add-hook 'js-mode-hook 'my-typescript-mode)
+
 (defun my-c++-style-set ()
   (interactive)
-  (setq c-basic-offset 4)
+  (setq c-basic-offset 2)
   (c-set-offset 'substatement-open 0))
 (add-hook 'c++-mode-hook 'my-c++-style-set)
 (add-hook 'c-mode-hook 'my-c++-style-set)
@@ -136,10 +147,36 @@
 	(move-beginning-of-line nil)
 	(yank)))
 
+(defun my-open-line ()
+	(interactive)
+	(open-line 1)
+	(next-line)
+	(indent-for-tab-command)
+	(previous-line)
+	(indent-for-tab-command))
+
+(global-set-key (kbd "C-o") 'my-open-line)
 (global-set-key (kbd "C-c M-w") 'copy-line)
 (global-set-key (kbd "C-c C-w") 'cut-line)
 (global-set-key (kbd "C-c C-y") 'yank-copy-cut)
 (global-set-key (kbd "C-c 0") 'kill-buffer-delete-window)
 
+;;让Mac下的Emacs读取正确的path变量，与shell中保持一致
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
+
+;;显示文件路径
+(defun frame-title-string ()
+	"Return the file name of current buffer, using ~ if under home directory"
+	(let 
+      ((fname (or 
+                 (buffer-file-name (current-buffer))
+                 (buffer-name))))
+      ;;let body
+		(when (string-match (getenv "HOME") fname)
+			(setq fname (replace-match "~" t t fname))        )
+		fname))
+
+;;; Title = 'system-name File: foo.bar'
+(setq frame-title-format '("" system-name "  File: "(:eval (frame-title-string))))
+
