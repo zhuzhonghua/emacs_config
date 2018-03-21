@@ -129,7 +129,8 @@
 (defun copy-line ()
   (interactive)
   (save-excursion
-	(kill-ring-save (line-beginning-position) (line-end-position))))
+		(delete-trailing-whitespace (line-beginning-position) (line-end-position))
+		(kill-ring-save (line-beginning-position) (line-end-position))))
 
 ;;(defun cut-line ()
 ;;  (interactive)
@@ -142,7 +143,8 @@
 (defun cut-line ()
   (interactive)
   (save-excursion
-	(kill-region (line-beginning-position) (line-end-position))))
+		(delete-trailing-whitespace (line-beginning-position) (line-end-position))
+		(kill-region (line-beginning-position) (line-end-position))))
 
 (defun kill-buffer-delete-window ()
   (interactive)
@@ -152,8 +154,9 @@
 (defun yank-copy-cut ()
   (interactive)
   (save-excursion
-	(move-beginning-of-line nil)
-	(yank)))
+		(move-beginning-of-line nil)		
+		(yank)
+		(delete-trailing-whitespace (line-beginning-position) (line-end-position))))
 
 (defun my-open-line ()
 	(interactive)
@@ -163,11 +166,16 @@
 	(previous-line)
 	(indent-for-tab-command))
 
+(defun del-trail-ws-line ()
+	(interactive)
+	(delete-trailing-whitespace (line-beginning-position) (line-end-position)))
+
 (global-set-key (kbd "C-o") 'my-open-line)
 (global-set-key (kbd "C-c M-w") 'copy-line)
 (global-set-key (kbd "C-c C-w") 'cut-line)
 (global-set-key (kbd "C-c C-y") 'yank-copy-cut)
 (global-set-key (kbd "C-c 0") 'kill-buffer-delete-window)
+(global-set-key (kbd "C-c d") 'del-trail-ws-line)
 
 ;;让Mac下的Emacs读取正确的path变量，与shell中保持一致
 (when (memq window-system '(mac ns x))
