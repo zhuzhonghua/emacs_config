@@ -136,7 +136,12 @@
 	(move-beginning-of-line nil)
 	(yank)))
 
+(defun insert-tab ()
+  (interactive)
+  (quoted-insert 9))
+
 (global-set-key (kbd "C-c M-w") 'copy-line)
 (global-set-key (kbd "C-c C-w") 'cut-line)
 (global-set-key (kbd "C-c C-y") 'yank-copy-cut)
 (global-set-key (kbd "C-c 0") 'kill-buffer-delete-window)
+(global-set-key (kbd "C-c q") 'quoted-insert)
