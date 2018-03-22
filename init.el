@@ -4,7 +4,7 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
-(setq-default tab-width 4)
+(setq-default tab-width 2)
 (setq make-backup-files nil)
 
 (show-paren-mode)
@@ -42,13 +42,24 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (magit))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+ '(ansi-color-faces-vector
+	 [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+	 ["black" "#d55e00" "#009e73" "#f8ec59" "#0072b2" "#cc79a7" "#56b4e9" "white"])
+ '(custom-safe-themes
+	 (quote
+		("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
+ '(package-selected-packages (quote (ag exec-path-from-shell typescript-mode magit)))
+ '(show-paren-mode t)
+ '(solarized-italic nil))
+
+;;(set-face-attribute 'default nil :family "Consolas" :height 160)
+(set-face-attribute 'default nil :font "Consolas 16")
+;; Chinese Font
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+		    charset (font-spec :family "Consolas"
+				       :size 16)))
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
@@ -81,9 +92,17 @@
 (add-hook 'text-mode-hook 'hide-ctrl-M)
 (add-hook 'c++-mode-hook 'hide-ctrl-M)
 
+(defun my-typescript-mode ()
+	(interactive)
+	(setq typescript-indent-level 2)
+	(setq js-indent-level 2))
+
+(add-hook 'typescript-mode-hook 'my-typescript-mode)
+(add-hook 'js-mode-hook 'my-typescript-mode)
+
 (defun my-c++-style-set ()
   (interactive)
-  (setq c-basic-offset 4)
+  (setq c-basic-offset 2)
   (c-set-offset 'substatement-open 0))
 (add-hook 'c++-mode-hook 'my-c++-style-set)
 (add-hook 'c-mode-hook 'my-c++-style-set)
@@ -110,7 +129,8 @@
 (defun copy-line ()
   (interactive)
   (save-excursion
-	(kill-ring-save (line-beginning-position) (line-end-position))))
+		(delete-trailing-whitespace (line-beginning-position) (line-end-position))
+		(kill-ring-save (line-beginning-position) (line-end-position))))
 
 ;;(defun cut-line ()
 ;;  (interactive)
@@ -123,7 +143,8 @@
 (defun cut-line ()
   (interactive)
   (save-excursion
-	(kill-region (line-beginning-position) (line-end-position))))
+		(delete-trailing-whitespace (line-beginning-position) (line-end-position))
+		(kill-region (line-beginning-position) (line-end-position))))
 
 (defun kill-buffer-delete-window ()
   (interactive)
@@ -133,15 +154,61 @@
 (defun yank-copy-cut ()
   (interactive)
   (save-excursion
-	(move-beginning-of-line nil)
-	(yank)))
+		(move-beginning-of-line nil)
+		(yank)
+		(delete-trailing-whitespace (line-beginning-position) (line-end-position))))
 
 (defun insert-tab ()
   (interactive)
   (quoted-insert 9))
 
+(defun my-open-line ()
+	(interactive)
+	(open-line 1)
+	(next-line)
+	(indent-for-tab-command)
+	(previous-line)
+	(indent-for-tab-command))
+
+(defun del-trail-ws-line ()
+	(interactive)
+	(delete-trailing-whitespace (line-beginning-position) (line-end-position)))
+
+(global-set-key (kbd "C-o") 'my-open-line)
 (global-set-key (kbd "C-c M-w") 'copy-line)
 (global-set-key (kbd "C-c C-w") 'cut-line)
 (global-set-key (kbd "C-c C-y") 'yank-copy-cut)
 (global-set-key (kbd "C-c 0") 'kill-buffer-delete-window)
 (global-set-key (kbd "C-c q") 'quoted-insert)
+(global-set-key (kbd "C-c d") 'del-trail-ws-line)
+
+;;让Mac下的Emacs读取正确的path变量，与shell中保持一致
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;;显示文件路径
+(defun frame-title-string ()
+	"Return the file name of current buffer, using ~ if under home directory"
+	(let 
+      ((fname (or 
+                 (buffer-file-name (current-buffer))
+                 (buffer-name))))
+      ;;let body
+		(when (string-match (getenv "HOME") fname)
+			(setq fname (replace-match "~" t t fname))        )
+		fname))
+
+;;; Title = 'system-name File: foo.bar'
+(setq frame-title-format '("" system-name "  File: "(:eval (frame-title-string))))
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
+(load-theme 'solarized t)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(add-to-list 'load-path "~/.emacs.d/elisp")
+(require 'unicad)
