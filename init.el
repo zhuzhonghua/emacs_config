@@ -49,7 +49,9 @@
  '(custom-safe-themes
 	 (quote
 		("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
- '(package-selected-packages (quote (ag exec-path-from-shell typescript-mode magit)))
+ '(package-selected-packages
+	 (quote
+		(auto-complete ag exec-path-from-shell typescript-mode magit)))
  '(show-paren-mode t)
  '(solarized-italic nil))
 
@@ -61,7 +63,13 @@
 		    charset (font-spec :family "Consolas"
 				       :size 16)))
 
+;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
+;; magit commit 乱码
+(defun my-git-commit-hook ()
+  (auto-fill-mode)
+  (set-buffer-file-coding-system 'utf-8-unix))
+(add-hook 'git-commit-mode-hook 'my-git-commit-hook)
 
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
@@ -207,3 +215,9 @@
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (require 'unicad)
+
+;; auto complete
+(ac-config-default)
+(auto-complete-mode)
+(add-to-list 'ac-modes 'typescript-mode)
+(setq ac-fuzzy-enable t)
