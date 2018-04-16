@@ -1,7 +1,7 @@
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
+;evil-search-next &evil-search-next &evil-search-next &evil-search-next &; just comment it out by adding a semicolon to the start oevil-define-motionevil-define-motionevil-define-motionevil-define-motionevil-define-motionevil-define-motionevil-define-motionevil-define-motionevil-define-motionf the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
 (setq-default tab-width 2)
@@ -51,7 +51,7 @@
 		("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
  '(package-selected-packages
 	 (quote
-		(auto-complete ag exec-path-from-shell typescript-mode magit)))
+		(paredit evil auto-complete ag exec-path-from-shell typescript-mode magit)))
  '(show-paren-mode t)
  '(solarized-italic nil))
 
@@ -221,3 +221,83 @@
 (auto-complete-mode)
 (add-to-list 'ac-modes 'typescript-mode)
 (setq ac-fuzzy-enable t)
+
+;; my evil mode
+;; read only layer mode
+(load "~/.emacs.d/rol.el")
+(defun toggle-evil-mode ()
+	(interactive)
+	(if (bound-and-true-p evil-mode)
+			(evil-mode 0)
+		(progn
+			(evil-mode 1)
+			(progn
+				(setq evil-normal-state-map (make-sparse-keymap))
+				(setq evil-motion-state-map (make-sparse-keymap))
+				(setq evil-visual-state-map (make-sparse-keymap))
+				(setq evil-insert-state-map (make-sparse-keymap))
+				(setq evil-operator-state-map (make-sparse-keymap))
+				(setq evil-replace-state-map (make-sparse-keymap))
+				(define-key evil-motion-state-map (kbd "h") 'backward-char)
+				(define-key evil-motion-state-map (kbd "j") 'next-line)
+				(define-key evil-motion-state-map (kbd "k") 'previous-line)
+				(define-key evil-motion-state-map (kbd "l") 'forward-char)
+				(define-key evil-motion-state-map (kbd "n") 'next-line)
+				(define-key evil-motion-state-map (kbd "p") 'previous-line)
+				(define-key evil-motion-state-map (kbd "0") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "1") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "2") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "3") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "4") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "5") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "6") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "7") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "8") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "9") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "a") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "A") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "b") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "B") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "c") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "C") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "d") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "D") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "e") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "E") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "f") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "F") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "g") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "G") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "i") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "I") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "m") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "M") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "o") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "O") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "q") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "Q") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "r") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "R") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "s") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "S") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "t") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "T") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "u") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "U") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "v") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "V") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "w") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "W") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "x") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "X") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "y") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "Y") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "z") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd "Z") 'dummy-bind)
+				(define-key evil-motion-state-map (kbd " ") 'dummy-bind)))))
+
+(global-set-key (kbd "M-ESC") 'toggle-evil-mode)
+(require 'evil)
+
+;;paredit mode
+(paredit-mode)
