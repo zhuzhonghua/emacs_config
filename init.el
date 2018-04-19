@@ -298,6 +298,7 @@
 
 (global-set-key (kbd "M-ESC") 'toggle-evil-mode)
 (require 'evil)
+(toggle-evil-mode)
 
 ;;paredit mode
 (paredit-mode)
