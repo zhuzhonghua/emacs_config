@@ -238,6 +238,7 @@
 				(setq evil-insert-state-map (make-sparse-keymap))
 				(setq evil-operator-state-map (make-sparse-keymap))
 				(setq evil-replace-state-map (make-sparse-keymap))
+				(setq evil-move-cursor-back nil)
 				(define-key evil-motion-state-map (kbd "h") 'backward-char)
 				(define-key evil-motion-state-map (kbd "j") 'next-line)
 				(define-key evil-motion-state-map (kbd "k") 'previous-line)
