@@ -56,10 +56,11 @@
 ;;(set-face-attribute 'default nil :family "Consolas" :height 160)
 (set-face-attribute 'default nil :font "Consolas 16")
 ;; Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font)
-		    charset (font-spec :family "Consolas"
-				       :size 16)))
+(if (display-graphic-p)
+		(dolist (charset '(kana han symbol cjk-misc bopomofo))
+			(set-fontset-font (frame-parameter nil 'font)
+												charset (font-spec :family "Consolas"
+																					 :size 16))))
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
