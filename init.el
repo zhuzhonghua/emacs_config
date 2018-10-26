@@ -9,6 +9,11 @@
 
 (show-paren-mode)
 
+(global-set-key (kbd "C-~")
+		'(lambda ()
+		   (interactive)
+		   (set-mark-command nil)))
+
 (global-set-key (kbd "C-<tab>")
 		'(lambda ()
 		   (interactive)
@@ -37,6 +42,9 @@
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -117,12 +125,19 @@
 (add-hook 'typescript-mode-hook 'my-typescript-mode)
 (add-hook 'js-mode-hook 'my-typescript-mode)
 
+;;c++ style
 (defun my-c++-style-set ()
   (interactive)
   (setq c-basic-offset 2)
   (c-set-offset 'substatement-open 0))
 (add-hook 'c++-mode-hook 'my-c++-style-set)
 (add-hook 'c-mode-hook 'my-c++-style-set)
+(add-hook 'c-mode-common-hook 'my-c++-style-set)
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
+;; compile
+(global-set-key (kbd "C-c c") 'compile)
 
 (projectile-global-mode)
 
@@ -226,10 +241,10 @@
 (require 'unicad)
 
 ;; auto complete
-(ac-config-default)
-(auto-complete-mode)
-(add-to-list 'ac-modes 'typescript-mode)
-(setq ac-fuzzy-enable t)
+;;(ac-config-default)
+;;(auto-complete-mode)
+;;(add-to-list 'ac-modes 'typescript-mode)
+;;(setq ac-fuzzy-enable t)
 
 ;; my evil mode
 ;; read only layer mode
@@ -312,3 +327,29 @@
 
 ;;paredit mode
 (paredit-mode)
+
+;;super-save-mode
+(super-save-mode +1)
+(setq super-save-auto-save-when-idle t)
+(setq auto-save-default nil)
+
+;;company-mode
+(require 'company)
+(company-mode)
+(add-hook 'after-init-hook 'global-company-mode)
+(global-set-key (kbd "C-,")
+		'(lambda ()
+		   (interactive)
+		   (company-complete)))
+
+;;yasnippet
+(add-to-list 'load-path
+						 "~/.emacs.d/elpa/yasnippet-0.12.2")
+
+(require 'yasnippet)
+(setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"                 ;; personal snippets
+        "~/.emacs.d/elpa/yasnippet-0.12.2/snippets/" ;; the yasmate collection
+        ))
+(yas-global-mode 1)
+(yas-load-directory "~/.emacs.d/elpa/yasnippet-0.12.2/snippets")
