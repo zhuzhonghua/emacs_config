@@ -75,10 +75,11 @@
 ;;(set-face-attribute 'default nil :family "Consolas" :height 160)
 (set-face-attribute 'default nil :font "Consolas 16")
 ;; Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font)
-		    charset (font-spec :family "Consolas"
-				       :size 16)))
+(if (display-graphic-p)
+		(dolist (charset '(kana han symbol cjk-misc bopomofo))
+			(set-fontset-font (frame-parameter nil 'font)
+												charset (font-spec :family "Consolas"
+																					 :size 16))))
 
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -186,9 +187,13 @@
 (defun yank-copy-cut ()
   (interactive)
   (save-excursion
-		(move-beginning-of-line nil)		
+		(move-beginning-of-line nil)
 		(yank)
 		(delete-trailing-whitespace (line-beginning-position) (line-end-position))))
+
+(defun insert-tab ()
+  (interactive)
+  (quoted-insert 9))
 
 (defun my-open-line ()
 	(interactive)
@@ -207,6 +212,7 @@
 (global-set-key (kbd "C-c C-w") 'cut-line)
 (global-set-key (kbd "C-c C-y") 'yank-copy-cut)
 (global-set-key (kbd "C-c 0") 'kill-buffer-delete-window)
+(global-set-key (kbd "C-c q") 'quoted-insert)
 (global-set-key (kbd "C-c d") 'del-trail-ws-line)
 
 ;;让Mac下的Emacs读取正确的path变量，与shell中保持一致
