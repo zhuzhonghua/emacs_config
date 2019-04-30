@@ -16,6 +16,11 @@
 
 (show-paren-mode)
 
+(add-hook 'transient-mark-mode-off-hook
+					(lambda ()
+						(transient-mark-mode t)))
+
+;;(transient-mark-mode)
 (global-set-key (kbd "C-~")
 		'(lambda ()
 		   (interactive)
@@ -78,7 +83,8 @@
    (quote
     (paredit evil auto-complete ag exec-path-from-shell typescript-mode magit)))
  '(show-paren-mode t)
- '(solarized-italic nil))
+ '(solarized-italic nil)
+ '(region ((t (:background "green" :distant-foreground "gtk_selection_fg_color")))))
 
 ;;(set-face-attribute 'default nil :family "Consolas" :height 160)
 (set-face-attribute 'default nil :font "Consolas 16")
