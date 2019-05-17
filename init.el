@@ -35,4 +35,4 @@
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (require 'unicad)
 (require 'basic-set)
-(require 'my-evil)
+(require 'my-evil-mode)
