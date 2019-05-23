@@ -16,7 +16,7 @@
 		((access-label . -)
 		 (innamespace . -)
 		 (substatement-open . 0))))
- '(package-selected-packages (quote (color-moccur magit)))
+ '(package-selected-packages (quote (pyim color-moccur magit)))
  '(show-paren-mode t)
  '(transient-mark-mode nil))
 
@@ -36,3 +36,4 @@
 (require 'unicad)
 (require 'basic-set)
 (require 'my-evil-mode)
+(require 'input-set)
