@@ -78,7 +78,8 @@
 	"read only except prefix keystrokes"
 	nil
 	" my-evil"
-	my-evil-mode-map)
+	my-evil-mode-map
+	:global 1)
 
 (defun my-evil-mode-disable ()
 	"Disable my evil mode on special occation"
