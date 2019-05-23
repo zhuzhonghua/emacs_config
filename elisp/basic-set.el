@@ -113,6 +113,7 @@
 (global-set-key (kbd "C-c c") 'compile)
 
 (projectile-global-mode)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
