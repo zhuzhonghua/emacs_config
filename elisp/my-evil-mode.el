@@ -81,7 +81,8 @@
 	:keymap my-evil-local-mode-map)
 
 (defun my-evil-initialize ()
-	(unless (minibufferp)
+	(unless (or (minibufferp)
+							(not (equal (key-binding "k") 'self-insert-command)))
 		(my-evil-local-mode 1)))
 
 (define-globalized-minor-mode	my-evil-mode my-evil-local-mode	my-evil-initialize)
