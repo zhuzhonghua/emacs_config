@@ -1,0 +1,4 @@
+* TODO neotree 实时刷新当前目录
+* TODO projectile 文件目录变化更新
+* TODO ivy find file partly exist
+	example: frameitems.h, cannot open items.h

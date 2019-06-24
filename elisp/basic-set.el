@@ -173,7 +173,7 @@
 (defun my-delete-line ()
   (interactive)
   (move-beginning-of-line 1)
-  (kill-line))
+  (kill-line 1))
 
 (defun other-window-backward (&optional n)
   "Select the previous window."
@@ -245,4 +245,5 @@
             (when (derived-mode-p 'c-mode 'c++-mode)
               (ggtags-mode 1))))
 
+(global-visual-line-mode)
 (provide 'basic-set)
